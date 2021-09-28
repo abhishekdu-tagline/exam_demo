@@ -1,43 +1,37 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction, signupAction } from "../../redux/actions/action";
 
 const useForm = (validate) => {
   const [userData, setUserData] = useState({});
   const [errors, setErrors] = useState({});
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  //   const [isSubmitting, setIsSubmitting] = useState(false);
+  // let err = {};
+  let history = useHistory();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  // console.log("Redux Store Data is", state);
 
   useEffect(() => {
-    if (Object.keys(errors).length === 0) {
-      handleUserRegistration();
-    }
+    // console.log("Error Length is inside UseEffect", Object.keys(errors).length);
   }, [errors]);
-
-  const handleUserRegistration = async () => {
-    try {
-      const res = await axios.post(
-        "https://nodejsexamination.herokuapp.com/users/SignUp/",
-        userData,
-        {
-          headers: headers,
-        }
-      );
-      console.log("data is added", res.data);
-    } catch (err) {
-      console.log("API not called because of error", err);
-    }
-
-    // console.log("Successfully added");
-  };
 
   /// Check Validations.
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validate(userData));
+    // console.log("Error Object is", errors);
+    dispatch(signupAction(userData));
   };
-  console.log("SetError return Error Object", errors);
+  // console.log("Error Object is outside of function ", errors);
+
+  /// Check Login Validation Method
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setErrors(validate(userData));
+    dispatch(loginAction(userData, history));
+  };
 
   //// handleChange function
   const handleChange = (e) => {
@@ -47,7 +41,7 @@ const useForm = (validate) => {
   };
   // console.log("State Variable  Data  outside fileHandleChange", values);
 
-  return { handleChange, handleSubmit, userData, errors };
+  return { handleChange, handleSubmit, handleLogin, userData, errors, state };
 };
 
 export default useForm;
