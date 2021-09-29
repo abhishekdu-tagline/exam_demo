@@ -1,11 +1,11 @@
-export default function validate(values) {
+export default function validate(values, login) {
   console.log("My Values Object is in Validations Object", values);
 
   let errors = {};
 
   // Name validation
 
-  if (!values.name) {
+  if (!values.name && login == undefined) {
     errors.name = "Please Enter Name...";
   }
 
@@ -24,7 +24,7 @@ export default function validate(values) {
   }
 
   //// Role Validations
-  if (!values.role) {
+  if (!values.role && login == undefined) {
     errors.role = "Please Enter Role...";
   }
 

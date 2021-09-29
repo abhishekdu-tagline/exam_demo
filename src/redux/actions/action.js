@@ -41,26 +41,45 @@ export const loginAction = (data, history) => {
         }
       );
       console.log("Response is UserLogin", userRes);
-      localStorage.setItem("user", userRes.data.data.role);
-      localStorage.setItem("jwt", userRes.data.data.token);
-      //   console.log("Login APi is called", localStorage.getItem("jwt"));
-
-      dispatch({
-        type: LOGIN,
-        payload: userRes.data,
-      });
       if (userRes.data.statusCode === 200) {
+        localStorage.setItem("user", userRes.data.data.role);
+        localStorage.setItem("jwt", userRes.data.data.token);
+        dispatch({
+          type: LOGIN,
+          payload: userRes.data.data,
+        });
         if (userRes.data.data.role === "teacher") {
+          alert("Login successful");
           history.push("/create_exam");
         } else {
           history.push("/kuch-hai");
         }
-        alert("Login successful");
       } else {
         alert("Login failed");
       }
     } catch (err) {
       console.log("Error in API calling ", err);
+    }
+  };
+};
+
+/// Forgot Password Action Method
+
+export const forgotPasswordAction = (email, history) => {
+  console.log("Email address is", email);
+  return async () => {
+    try {
+      const res = await axios.post(
+        "https://nodejsexamination.herokuapp.com/users/ForgotPassword",
+        email,
+        {
+          headers: headers,
+        }
+      );
+      // history.push("/");
+      console.log("Forgot PassWord API response", res);
+    } catch (err) {
+      console.log("Forgot Password Failed", err);
     }
   };
 };

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, signupAction } from "../../redux/actions/action";
@@ -7,31 +6,35 @@ import { loginAction, signupAction } from "../../redux/actions/action";
 const useForm = (validate) => {
   const [userData, setUserData] = useState({});
   const [errors, setErrors] = useState({});
-  // let err = {};
+  // const [isSubmit, setisSubmit] = useState(false);
+
   let history = useHistory();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  // console.log("Redux Store Data is", state);
 
-  useEffect(() => {
-    // console.log("Error Length is inside UseEffect", Object.keys(errors).length);
-  }, [errors]);
+  // useEffect(() => {
+  //   if (Object.keys(state).length === 0 && isSubmit) {
+  //     console.log("useEffect is called");
+  //     dispatch(loginAction(userData, history));
+  //   }
+  // }, [errors]);
 
   /// Check Validations.
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validate(userData));
     // console.log("Error Object is", errors);
-    dispatch(signupAction(userData));
+    // dispatch(signupAction(userData));
   };
-  // console.log("Error Object is outside of function ", errors);
 
   /// Check Login Validation Method
-  const handleLogin = (e) => {
+  const handleLogin = (e, login) => {
+    console.log("login is called", login);
     e.preventDefault();
-    setErrors(validate(userData));
+    setErrors(validate(userData, login));
     dispatch(loginAction(userData, history));
   };
+  console.log("Error Object is outside of function ", errors);
 
   //// handleChange function
   const handleChange = (e) => {

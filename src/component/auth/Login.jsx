@@ -11,11 +11,15 @@ const Login = () => {
     useForm(validate);
   // console.log("Redux Store Data is in Login Component", state);
   //   const { handleChange } = useFrom();
-
+  console.log("Error in login Page", errors);
   return (
     <>
       <h4> Login </h4>
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={(e) => {
+          handleLogin(e, "login");
+        }}
+      >
         <input
           autoComplete="off"
           type="email"
@@ -42,7 +46,8 @@ const Login = () => {
           Don't have an account yet?{" "}
           <p>
             {" "}
-            <Link to="/signup"> Sign up now! </Link>{" "}
+            <Link to="/signup"> Sign up now! </Link> <br />
+            <Link to="/forgot_password"> Forgot Password? </Link>{" "}
           </p>
         </div>
       </form>
