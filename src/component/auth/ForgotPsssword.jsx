@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { forgotPasswordAction } from "../../redux/actions/action";
 
-const ForgotPsssword = () => {
+const ForgotPsssword = React.memo(() => {
   const [email, setEmail] = useState({});
-  console.log("Fprgot Password Component is rendered");
+  // console.log("Fprgot Password Component is rendered");
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -30,9 +30,11 @@ const ForgotPsssword = () => {
         }}
       >
         Send Verification Link{" "}
-      </button>
+      </button>{" "}
+      <br /> <br />
+      <Link to="/"> Back Login</Link>
     </>
   );
-};
+});
 
 export default ForgotPsssword;

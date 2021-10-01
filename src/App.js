@@ -1,10 +1,4 @@
 import "./App.css";
-
-import Teacher from "./routing/Teacher";
-import Student from "./routing/Student";
-
-import Login from "./component/auth/Login";
-import { Signup } from "./component/auth/Signup";
 import Routes from "./routing/route";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +9,7 @@ function App() {
   // console.log("getUserData", getUserData);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("App.js UseEffect called");
     dispatch({
       type: LOGIN,
       payload: {

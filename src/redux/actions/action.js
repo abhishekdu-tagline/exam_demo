@@ -83,3 +83,28 @@ export const forgotPasswordAction = (email, history) => {
     }
   };
 };
+
+//// Forgot Password and Gernet New Password API is called
+export const setNewPassword = (data, searchToken, history) => {
+  console.log("set New Password Action is called");
+  return async () => {
+    try {
+      const res = await axios.post(
+        `https://nodejsexamination.herokuapp.com/users/ForgotPassword/Verify${searchToken}`,
+        data,
+        {
+          headers: headers,
+        }
+      );
+      // console.log("Set New Password Responce is", res);
+      if (res.data.statusCode === 200) {
+        alert("ForgotPassword successful");
+        history.push("/");
+      } else {
+        alert("Invalid Email");
+      }
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  };
+};

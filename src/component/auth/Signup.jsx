@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useForm from "../containers/useFrom";
 import validate from "../../utils/fromValidation";
 
-export const Signup = () => {
+export const Signup = React.memo(() => {
   // Create initial State
   // const [user, setUser] = useState({});
   const { handleChange, handleSubmit, userData, errors } = useForm(validate);
@@ -51,4 +51,4 @@ export const Signup = () => {
       </form>
     </>
   );
-};
+});

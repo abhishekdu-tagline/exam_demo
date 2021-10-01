@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ForgotPsssword from "../component/auth/ForgotPsssword";
 import Login from "../component/auth/Login";
+import { NewPassWord } from "../component/auth/NewPassWord";
 import { Signup } from "../component/auth/Signup";
 import Student from "./Student";
 import Teacher from "./Teacher";
@@ -12,7 +13,7 @@ const Routes = () => {
   //   console.log("getUserData", getUserData);
 
   const state = useSelector((state) => state.examReducer.loginUser.data);
-  console.log("Redux Data is", state);
+  // console.log("Redux Data is", state);
 
   //   console.log("Redux State", state.loginUser.data.data.role);
   //   const {
@@ -26,6 +27,7 @@ const Routes = () => {
           <Route exact path="/" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/forgot_password" component={ForgotPsssword} />
+          <Route path="/newPassword" component={NewPassWord} />
           {/* {getUserData !== null && getUserData === "teacher" ? (
             <Teacher />
           ) : (

@@ -1,5 +1,6 @@
 export default function validate(values, login) {
   console.log("My Values Object is in Validations Object", values);
+  console.log("login is valid", login);
 
   let errors = {};
 
@@ -10,7 +11,7 @@ export default function validate(values, login) {
   }
 
   /// Email validation
-  if (!values.email) {
+  if (!values.email && login == undefined) {
     errors.email = "email address is required";
   } else if (!/\S+@\S+\.\S+/.test(values.email)) {
     errors.email = "Email address is invalid";

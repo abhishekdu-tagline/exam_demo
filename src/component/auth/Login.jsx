@@ -17,7 +17,7 @@ const Login = () => {
       <h4> Login </h4>
       <form
         onSubmit={(e) => {
-          handleLogin(e, "login");
+          handleLogin(e, "login", "");
         }}
       >
         <input
