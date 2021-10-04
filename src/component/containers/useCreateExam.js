@@ -9,12 +9,21 @@ const useCreateExam = () => {
   const [questions, setQuestions] = useState();
   const [answers, setAnswer] = useState();
   const [options, setOptions] = useState([]);
+  const [optionsObj, setOptionsObj] = useState({
+    optionA: "",
+    optionB: "",
+    optionC: "",
+    optionD: "",
+  });
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     if (questionArray.length > 0) {
       setExamObj({ ...examObj, subjectName, question: questionArray });
     }
   }, [questionArray]);
+
+  console.log("Exam Object is", examObj);
 
   /// Handle Subject
   const handleSubject = (e) => {
@@ -31,15 +40,9 @@ const useCreateExam = () => {
   //// Handle Option
   const handleOptions = (e) => {
     const { name, value } = e.target;
-    obj[name] = value;
-    // console.log("obj", obj);
-    let optionArray = Object.values(obj);
-    // console.log("Obj Object Convert array ", optionArray);
-    if (optionArray.length === 4) {
-      setOptions([optionArray]);
-    }
+    setOptionsObj({ ...optionsObj, [name]: value });
   };
-  // console.log("option object is array", options);
+  // console.log("Option log is", optionsObj);
 
   //// Handle Answer
   const handleAnswer = (e) => {
@@ -50,11 +53,21 @@ const useCreateExam = () => {
   //// Add Main State
   const addQuestion = (e) => {
     e.preventDefault();
-    setQuestionArray([...questionArray, { questions, answers, options }]);
-    // console.log("Subject Name is", subjectName);
+    const convertArray = Object.values(optionsObj);
+    // console.log("Option  Object  is =======", convertArray);
+    setOptions([...options, optionsObj]);
+    setQuestionArray([
+      ...questionArray,
+      { questions, answers, options: [convertArray] },
+    ]);
+    setQuestions("");
+    setAnswer("");
+    setOptionsObj({ optionA: "", optionB: "", optionC: "", optionD: "" });
+    setCount(count + 1);
   };
-  console.log("Question Array is ", questionArray);
-  console.log("Exam Obj is", examObj);
+  // console.log("Question Array is ", questionArray);
+
+  // console.log("Option Array is", options);
 
   return [
     handleSubject,
@@ -62,6 +75,10 @@ const useCreateExam = () => {
     handleOptions,
     handleAnswer,
     addQuestion,
+    optionsObj,
+    count,
+    questions,
+    answers,
   ];
 };
 
