@@ -16,14 +16,20 @@ const CreateExam = React.memo(() => {
     handleOptions,
     handleAnswer,
     addQuestion,
+    handlePrev,
     optionsObj,
     count,
     questions,
     answers,
+    questionArray,
+    currentIndex,
   ] = useCreateExam();
 
-  console.log("option Object is CreateExam", optionsObj);
+  // console.log("option Object is CreateExam", optionsObj);
 
+  const currentQuestion = questionArray[currentIndex];
+  console.log("Current Question  value is " + JSON.stringify(currentQuestion));
+  console.log("Current Index is CreateExam Component", currentIndex);
   return (
     <>
       <h4> Create Exam </h4> <br /> <hr />
@@ -45,8 +51,8 @@ const CreateExam = React.memo(() => {
             name="questions"
             placeholder="Enter Questions...."
             onChange={handleQuestion}
-            value={questions}
-          />{" "}
+            value={questions || currentQuestion?.questions}
+          />
           <br /> <br />
           <div>
             <label> OptionA</label> &nbsp; &nbsp;
@@ -117,7 +123,10 @@ const CreateExam = React.memo(() => {
           <br />
           <br />
           <div>
-            <button type="button">Prev</button> &nbsp;
+            <button type="button" onClick={handlePrev}>
+              Prev
+            </button>{" "}
+            &nbsp;
             <button onClick={addQuestion}>Next</button> &nbsp;
             <button>Clear</button> &nbsp;
             <button>Submit</button>
