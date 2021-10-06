@@ -17,19 +17,25 @@ const CreateExam = React.memo(() => {
     handleAnswer,
     addQuestion,
     handlePrev,
+    clearCurrentQuestion,
+    updateQuestion,
+    addQuestionList,
     optionsObj,
     count,
     questions,
     answers,
     questionArray,
     currentIndex,
+    buttonStatus,
   ] = useCreateExam();
 
   // console.log("option Object is CreateExam", optionsObj);
 
   const currentQuestion = questionArray[currentIndex];
-  console.log("Current Question  value is " + JSON.stringify(currentQuestion));
-  console.log("Current Index is CreateExam Component", currentIndex);
+  // console.log("Current Question  value is " + JSON.stringify(currentQuestion));
+  console.log("option Object is :-", optionsObj);
+  // console.log("Current Index is CreateExam Component", currentIndex);
+  // console.log(questionArray[currentIndex]?.options[0]);
   return (
     <>
       <h4> Create Exam </h4> <br /> <hr />
@@ -51,7 +57,7 @@ const CreateExam = React.memo(() => {
             name="questions"
             placeholder="Enter Questions...."
             onChange={handleQuestion}
-            value={questions || currentQuestion?.questions}
+            value={questions}
           />
           <br /> <br />
           <div>
@@ -127,9 +133,34 @@ const CreateExam = React.memo(() => {
               Prev
             </button>{" "}
             &nbsp;
-            <button onClick={addQuestion}>Next</button> &nbsp;
-            <button>Clear</button> &nbsp;
-            <button>Submit</button>
+            <button type="button" onClick={addQuestion}>
+              Next
+            </button>{" "}
+            &nbsp;
+            <button
+              type="button"
+              onClick={() => {
+                clearCurrentQuestion(currentIndex);
+              }}
+            >
+              Clear
+            </button>{" "}
+            &nbsp;
+            {buttonStatus === "prev" ? (
+              <button
+                type="button"
+                onClick={() => {
+                  updateQuestion(currentIndex);
+                }}
+              >
+                {" "}
+                Update
+              </button>
+            ) : (
+              <button type="button" onClick={addQuestionList}>
+                Submit
+              </button>
+            )}
           </div>
         </div>
       </form>

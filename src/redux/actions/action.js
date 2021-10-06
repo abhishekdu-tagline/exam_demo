@@ -108,3 +108,21 @@ export const setNewPassword = (data, searchToken, history) => {
     }
   };
 };
+
+export const createExamActions = (examObj) => {
+  console.log("Action is called");
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(
+        "https://nodejsexamination.herokuapp.com/dashboard/Teachers/Exam",
+        examObj,
+        {
+          headers: headers,
+        }
+      );
+      console.log("response of create exam API", result);
+    } catch (err) {
+      console.log("Error in Create exam API", err);
+    }
+  };
+};
