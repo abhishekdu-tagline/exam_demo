@@ -22,8 +22,8 @@ const CreateExam = React.memo(() => {
     addQuestionList,
     optionsObj,
     count,
-    questions,
-    answers,
+    question,
+    answer,
     questionArray,
     currentIndex,
     buttonStatus,
@@ -57,7 +57,7 @@ const CreateExam = React.memo(() => {
             name="questions"
             placeholder="Enter Questions...."
             onChange={handleQuestion}
-            value={questions}
+            value={question}
           />
           <br /> <br />
           <div>
@@ -125,7 +125,7 @@ const CreateExam = React.memo(() => {
             />
           </div>{" "}
           <label>Answer : - &nbsp;</label>
-          {answers}
+          {answer}
           <br />
           <br />
           <div>

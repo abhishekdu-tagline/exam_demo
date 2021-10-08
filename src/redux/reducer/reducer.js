@@ -1,4 +1,10 @@
-import { LOGIN, SIGNUP } from "../constaints/constaint";
+import {
+  CREATE_EXAM,
+  DELETE_EXAM,
+  LOGIN,
+  SIGNUP,
+  VIEW_EXAM,
+} from "../constaints/constaint";
 
 const initialState = {
   registerUsers: {},
@@ -7,6 +13,8 @@ const initialState = {
     data: null,
     message: null,
   },
+  createExams: [],
+  viewExams: [],
 };
 
 export default function examReducer(state = initialState, action) {
@@ -32,6 +40,25 @@ export default function examReducer(state = initialState, action) {
         },
       };
 
+    case CREATE_EXAM:
+      return {
+        ...state,
+        createExams: [...state.createExams, action.payload],
+      };
+
+    case VIEW_EXAM:
+      return { ...state, viewExams: action.payload };
+
+    case DELETE_EXAM:
+      console.log("Action send deleted id is", action.payload);
+      const updatedExam = state.viewExams.filter((item) => {
+        console.log("item");
+        return item._id !== action.payload;
+      });
+
+      console.log("Updated Exam", updatedExam);
+
+      return { ...state, viewExams: updatedExam };
     default:
       return state;
   }

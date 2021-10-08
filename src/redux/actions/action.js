@@ -1,7 +1,20 @@
 import axios from "axios";
-import { LOGIN, SIGNUP } from "../constaints/constaint";
+import {
+  CREATE_EXAM,
+  DELETE_EXAM,
+  LOGIN,
+  SIGNUP,
+  VIEW_EXAM,
+} from "../constaints/constaint";
 const headers = {
   "Content-Type": "application/json",
+};
+const token = localStorage.getItem("jwt");
+console.log(token);
+
+const examHeaders = {
+  "Content-Type": "application/json",
+  "access-token": token,
 };
 //// Signup Actions //
 export const signupAction = (data) => {
@@ -52,7 +65,7 @@ export const loginAction = (data, history) => {
           alert("Login successful");
           history.push("/create_exam");
         } else {
-          history.push("/kuch-hai");
+          history.push("/student_exam");
         }
       } else {
         alert("Login failed");
@@ -109,20 +122,80 @@ export const setNewPassword = (data, searchToken, history) => {
   };
 };
 
+//// Create Exam API call
 export const createExamActions = (examObj) => {
   console.log("Action is called");
+
+  console.log("Exam Object is action ", examObj);
   return async (dispatch) => {
     try {
       const result = await axios.post(
         "https://nodejsexamination.herokuapp.com/dashboard/Teachers/Exam",
         examObj,
         {
-          headers: headers,
+          headers: examHeaders,
         }
       );
       console.log("response of create exam API", result);
+
+      if (result.data.statusCode === 200) {
+        dispatch({
+          type: CREATE_EXAM,
+          payload: examObj,
+        });
+      }
     } catch (err) {
       console.log("Error in Create exam API", err);
+    }
+  };
+};
+
+////  View Exam API call
+export const viewExams = () => {
+  return async (dispatch) => {
+    try {
+      const exams = await axios.get(
+        "https://nodejsexamination.herokuapp.com/dashboard/Teachers/viewExam",
+        {
+          headers: examHeaders,
+        }
+      );
+
+      console.log("Fetch Exams from server", exams);
+
+      if (exams.data.statusCode === 200) {
+        console.log("action successful");
+        dispatch({
+          type: VIEW_EXAM,
+          payload: exams.data.data,
+        });
+      }
+    } catch (err) {
+      console.log("Fetchig Error", err);
+    }
+  };
+};
+
+/// Delete Exam API calls
+
+export const deleteExams = (id) => {
+  console.log("selected deleted id is " + id);
+  return async (dispatch) => {
+    try {
+      const deleteResponse = await axios.delete(
+        `https://nodejsexamination.herokuapp.com/dashboard/Teachers/deleteExam?id=${id}`,
+        {
+          headers: examHeaders,
+        }
+      );
+      console.log("Delete Response is", deleteResponse);
+
+      dispatch({
+        type: DELETE_EXAM,
+        payload: id,
+      });
+    } catch (err) {
+      console.log("Delete API is not called", err);
     }
   };
 };

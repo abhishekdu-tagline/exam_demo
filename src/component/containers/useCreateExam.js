@@ -8,8 +8,8 @@ const useCreateExam = () => {
   const [examObj, setExamObj] = useState({});
   const [questionArray, setQuestionArray] = useState([]); ///// add 15 Question this Array
   const [subjectName, setSubjectName] = useState();
-  const [questions, setQuestions] = useState();
-  const [answers, setAnswer] = useState();
+  const [question, setQuestions] = useState();
+  const [answer, setAnswer] = useState();
   const [options, setOptions] = useState([]);
   const [optionsObj, setOptionsObj] = useState({
     optionA: "",
@@ -20,15 +20,31 @@ const useCreateExam = () => {
   const [count, setCount] = useState(1);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [buttonStatus, setButtonStatus] = useState();
+  const dispatch = useDispatch();
 
   // const dispatch = useDispatch();
   useEffect(() => {
     if (questionArray.length > 0) {
-      setExamObj({ ...examObj, subjectName, question: questionArray });
+      setExamObj({ ...examObj, subjectName, questions: questionArray });
     }
+
+    // console.log("Exam Object inside uesEffect ", examObj);
+    // if (questionArray.length === 2) {
+    //   if (examObj?.notes) {
+    //     dispatch(createExamActions(examObj));
+    //   }
+    // }
   }, [questionArray]);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("useEffect for Exam Obj");
+    console.log("Exam Object afther function call ", examObj);
+    if (questionArray.length === 15) {
+      if (examObj?.notes) {
+        dispatch(createExamActions(examObj));
+      }
+    }
+  }, [examObj]);
 
   /// Handle Subject
   const handleSubject = (e) => {
@@ -51,7 +67,7 @@ const useCreateExam = () => {
   const handleAnswer = (e) => {
     setAnswer(e.target.value);
   };
-  // console.log("Handle Answer is " + answers);
+  // console.log("Handle Answer is " + answer);
 
   //// Add Main State
   const addQuestion = (e) => {
@@ -63,8 +79,8 @@ const useCreateExam = () => {
     if (currentIndex <= questionArray.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setCount(count + 1);
-      setQuestions(questionArray[currentIndex + 1]?.questions);
-      setAnswer(questionArray[currentIndex + 1]?.answers);
+      setQuestions(questionArray[currentIndex + 1]?.question);
+      setAnswer(questionArray[currentIndex + 1]?.answer);
       setOptionsObj({
         optionA: questionArray[currentIndex + 1]?.options[0],
         optionB: questionArray[currentIndex + 1]?.options[1],
@@ -78,7 +94,7 @@ const useCreateExam = () => {
       // console.log("Current index in else  " + currentIndex);
       setQuestionArray([
         ...questionArray,
-        { questions, answers, options: convertArray },
+        { question, answer, options: convertArray },
       ]);
     }
 
@@ -106,8 +122,8 @@ const useCreateExam = () => {
     } else {
       setCurrentIndex(currentIndex - 1);
       setCount(count - 1);
-      setQuestions(questionArray[currentIndex - 1]?.questions);
-      setAnswer(questionArray[currentIndex - 1]?.answers);
+      setQuestions(questionArray[currentIndex - 1]?.question);
+      setAnswer(questionArray[currentIndex - 1]?.answer);
       setOptionsObj({
         optionA: questionArray[currentIndex - 1]?.options[0],
         optionB: questionArray[currentIndex - 1]?.options[1],
@@ -125,7 +141,7 @@ const useCreateExam = () => {
     console.log("Option Object Convert Array of Option", convertOptions);
     const updateQuestionObj = questionArray.map((item, index) => {
       if (index === id) {
-        return { ...item, questions, answers, options: convertOptions };
+        return { ...item, question, answer, options: convertOptions };
       } else {
         return item;
       }
@@ -144,7 +160,7 @@ const useCreateExam = () => {
         setQuestions("");
         setOptionsObj({ optionA: "", optionB: "", optionC: "", optionD: "" });
         setAnswer("");
-        return { ...item, questions: "", answers: "", options: [] };
+        return { ...item, question: "", answer: "", options: [] };
       } else {
         return item;
       }
@@ -160,9 +176,8 @@ const useCreateExam = () => {
       questionArray.length
     );
 
-    console.log("Exam Object is", examObj);
     if (questionArray.length === 15) {
-      dispatch(createExamActions(examObj));
+      setExamObj({ ...examObj, notes: ["10mins exam", "start time 10am"] });
     }
   };
 
@@ -178,8 +193,8 @@ const useCreateExam = () => {
     addQuestionList,
     optionsObj,
     count,
-    questions,
-    answers,
+    question,
+    answer,
     questionArray,
     currentIndex,
     buttonStatus,

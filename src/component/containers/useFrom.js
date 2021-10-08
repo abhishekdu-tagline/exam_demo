@@ -32,7 +32,7 @@ const useForm = (validate) => {
     e.preventDefault();
     setErrors(validate(userData));
     // console.log("Error Object is", errors);
-    // dispatch(signupAction(userData));
+    dispatch(signupAction(userData));
   };
 
   /// Check Login Validation Method
