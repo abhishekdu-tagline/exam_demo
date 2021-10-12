@@ -8,3 +8,8 @@ export const DELETE_EXAM = "DELETE_EXAM";
 //// Student Constaints //
 
 export const EXAMS = "EXAMS";
+export const STUDENT_PROFILE = "STUDENT_PROFILE";
+export const ONCHANGE = "ONCHANGE";
+export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const VIEW_EXAM_PAPER = "VIEW_EXAM_PAPER";
+export const GIVE_EXAM = "GIVE_EXAM";

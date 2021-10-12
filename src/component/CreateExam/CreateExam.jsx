@@ -66,6 +66,7 @@ const CreateExam = React.memo(() => {
               type="radio"
               name="answer"
               value={optionsObj.optionA}
+              checked={optionsObj.optionA === answer}
               onChange={handleAnswer}
             />
             <input
@@ -83,6 +84,7 @@ const CreateExam = React.memo(() => {
               name="answer"
               value={optionsObj.optionB}
               onChange={handleAnswer}
+              checked={optionsObj.optionB === answer}
             />
             <input
               type="text"
@@ -99,6 +101,7 @@ const CreateExam = React.memo(() => {
               name="answer"
               value={optionsObj.optionC}
               onChange={handleAnswer}
+              checked={optionsObj.optionC === answer}
             />
             <input
               type="text"
@@ -115,6 +118,7 @@ const CreateExam = React.memo(() => {
               name="answer"
               onChange={handleAnswer}
               value={optionsObj.optionD}
+              checked={optionsObj.optionD === answer}
             />
             <input
               type="text"
