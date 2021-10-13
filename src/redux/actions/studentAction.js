@@ -117,9 +117,10 @@ export const showExamPaper = (id, history) => {
           headers: examHeaders,
         }
       );
-      console.log("Display Exam Pepar Response is", res);
+      console.log("Display Exam Pepar Response is", res.data.data);
       if (res.data.statusCode === 200) {
         localStorage.setItem("exam", JSON.stringify(res.data.data));
+        // localStorage.setItem("index", res.data.data[0]);
         dispatch({
           type: VIEW_EXAM_PAPER,
           payload: res.data.data,

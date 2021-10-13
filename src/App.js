@@ -3,6 +3,7 @@ import Routes from "./routing/route";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "./redux/constaints/constaint";
+import Com from "./Com";
 
 function App() {
   // const getUserData = localStorage.getItem("user");
