@@ -2,6 +2,8 @@ import axios from "axios";
 import {
   CREATE_EXAM,
   DELETE_EXAM,
+  EXAM_DETAILS,
+  EXAM_ONCHANGE,
   LOGIN,
   SIGNUP,
   VIEW_EXAM,
@@ -139,6 +141,7 @@ export const createExamActions = (examObj) => {
       console.log("response of create exam API", result);
 
       if (result.data.statusCode === 200) {
+        localStorage.setItem("createExam", result.data.data);
         dispatch({
           type: CREATE_EXAM,
           payload: examObj,
@@ -197,5 +200,47 @@ export const deleteExams = (id) => {
     } catch (err) {
       console.log("Delete API is not called", err);
     }
+  };
+};
+
+//// Exam Detail
+
+export const examDetails = (id, history) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `https://nodejsexamination.herokuapp.com/dashboard/Teachers/examDetail?id=${id}`,
+        {
+          headers: examHeaders,
+        }
+      );
+
+      console.log(
+        "Exam Details are List of Question and Answer",
+        res.data.data
+      );
+
+      if (res.data.statusCode === 200) {
+        console.log("action successful");
+        dispatch({
+          type: EXAM_DETAILS,
+          payload: res.data.data,
+        });
+        history.push(`/edit_exam/${id}`);
+      }
+    } catch (err) {
+      console.log("Fetchig Error", err);
+    }
+  };
+};
+
+/// onChange
+
+export const onChangeExam = (value, index) => {
+  console.log("Value is " + value + " and index is " + index);
+  return {
+    type: EXAM_ONCHANGE,
+    inputValue: value,
+    index: index,
   };
 };

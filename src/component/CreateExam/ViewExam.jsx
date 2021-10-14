@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteExams, viewExams } from "../../redux/actions/action";
+import { useHistory } from "react-router";
+import {
+  deleteExams,
+  examDetails,
+  viewExams,
+} from "../../redux/actions/action";
 
 const ViewExam = () => {
   const state = useSelector((state) => state.examReducer.viewExams);
   console.log("Redux State Data  in ViewExam", state);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(viewExams());
@@ -33,6 +39,14 @@ const ViewExam = () => {
                     onClick={() => dispatch(deleteExams(exams._id))}
                   >
                     Delete Exam
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      dispatch(examDetails(exams._id, history));
+                    }}
+                  >
+                    Exam Detail
                   </button>
                 </td>
               </tr>

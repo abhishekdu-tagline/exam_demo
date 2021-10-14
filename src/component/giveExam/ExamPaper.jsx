@@ -4,10 +4,14 @@ import { useParams } from "react-router";
 import { giveExams } from "../../redux/actions/studentAction";
 
 const ExamPaper = () => {
+  const examData = JSON.parse(localStorage.getItem("exam")) || [];
+  console.log("Exam Data is", examData);
+
   const [giveExam, setGiveExam] = useState({});
   const [currentIndex, setCurrentIndex] = useState(
     localStorage.getItem("index") || 0
   );
+  const [currentData, setCurrentData] = useState([]);
 
   // const [examArray, setExamArray] = useState([]);
   // const [isChecked, setIsChecked] = useState(false);
@@ -19,10 +23,22 @@ const ExamPaper = () => {
   //// useEffect for SuffleExam
 
   useEffect(() => {
-    console.log("Current Index: " + currentIndex);
-
+    // console.log("Current Index: " + currentIndex);
     localStorage.setItem("index", currentIndex);
+    const indexData = examData.filter((ele, index) => {
+      console.log("is run ...");
+      return index === currentIndex;
+    });
+    console.log("current Index Data is", indexData);
+    localStorage.setItem("currentIndexData", JSON.stringify(indexData));
   }, [currentIndex]);
+
+  useEffect(() => {
+    const fetchData = JSON.parse(localStorage.getItem("currentIndexData"));
+    console.log("fetch data", fetchData);
+    setCurrentData(fetchData);
+  }, []);
+  console.log("Current Data  is", currentData);
 
   // const getIndex = JSON.parse(localStorage.getItem("index"));
   // console.log("Current Index fetch from local storage", getIndex);
@@ -49,9 +65,6 @@ const ExamPaper = () => {
   //   return examArray;
   // };
 
-  const examData = JSON.parse(localStorage.getItem("exam")) || [];
-  console.log("Exam Data is", examData);
-
   // console.log("Suffle Exam Question is", suffleExamQuestions);
 
   const handleChange = (e, id) => {
@@ -62,16 +75,14 @@ const ExamPaper = () => {
   };
 
   const increaseIndex = () => {
-    const getIndex = JSON.parse(localStorage.getItem("index"));
-    console.log("getIndex is", getIndex);
-    setCurrentIndex(getIndex + 1);
+    setCurrentIndex(currentIndex + 1);
   };
 
   return (
     <>
       <h4>Exam Paper </h4>
-      {examData.map((item, index) => {
-        if (index === currentIndex) {
+      {/* {examData.map((item, index) => {
+        if (currentIndex === index) {
           if (currentIndex <= examData.length - 1) {
             return (
               <div key={item._id}>
@@ -107,7 +118,7 @@ const ExamPaper = () => {
             );
           }
         }
-      })}
+      })} */}
     </>
   );
 };

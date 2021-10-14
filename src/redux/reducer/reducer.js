@@ -1,6 +1,8 @@
 import {
   CREATE_EXAM,
   DELETE_EXAM,
+  EXAM_DETAILS,
+  EXAM_ONCHANGE,
   LOGIN,
   SIGNUP,
   VIEW_EXAM,
@@ -15,6 +17,7 @@ const initialState = {
   },
   createExams: [],
   viewExams: [],
+  examDetail: {},
 };
 
 export default function examReducer(state = initialState, action) {
@@ -59,6 +62,22 @@ export default function examReducer(state = initialState, action) {
       console.log("Updated Exam", updatedExam);
 
       return { ...state, viewExams: updatedExam };
+
+    case EXAM_DETAILS:
+      console.log("Action send Reducer Data", action.payload);
+      return { ...state, examDetail: action.payload };
+
+    case EXAM_ONCHANGE:
+      console.log("Action log is", action.index);
+      const updateArray = state.examDetail.questions.map((item, index) => {
+        if (index === action.index) {
+          return { ...item, question: action.value };
+        } else {
+          return item;
+        }
+      });
+      console.log("Update Array: ", updateArray);
+
     default:
       return state;
   }

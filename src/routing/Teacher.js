@@ -3,6 +3,7 @@ import CreateExam from "../component/CreateExam/CreateExam";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ViewExam from "../component/CreateExam/ViewExam";
 import ViewStudent from "../component/CreateExam/ViewStudent";
+import EditExam from "../component/CreateExam/EditExam";
 
 const Teacher = () => {
   return (
@@ -27,6 +28,7 @@ const Teacher = () => {
         <Route path="/create_exam" component={CreateExam} />
         <Route path="/view_exam" component={ViewExam} />
         <Route path="/view_student" component={ViewStudent} />
+        <Route path="/edit_exam/:id" component={EditExam} />
       </div>
     </>
   );

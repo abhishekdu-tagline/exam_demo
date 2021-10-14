@@ -4,6 +4,8 @@ export const FORGOT_PASSWORD = "FORGOT_PASSWD";
 export const CREATE_EXAM = "CREATE_EXAM";
 export const VIEW_EXAM = "VIEW_EXAM";
 export const DELETE_EXAM = "DELETE_EXAM";
+export const EXAM_DETAILS = "EXAM_DETAILS";
+export const EXAM_ONCHANGE = "EXAM_ONCHANGE";
 
 //// Student Constaints //
 
