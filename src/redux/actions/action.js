@@ -5,7 +5,11 @@ import {
   EXAM_DETAILS,
   EXAM_ONCHANGE,
   LOGIN,
+  SEARCH_STUDENT,
+  SHOW_STUDENTS,
   SIGNUP,
+  STUDENT_RESULTS,
+  UPDATE_EXAM,
   VIEW_EXAM,
 } from "../constaints/constaint";
 const headers = {
@@ -242,5 +246,86 @@ export const onChangeExam = (value, index) => {
     type: EXAM_ONCHANGE,
     inputValue: value,
     index: index,
+  };
+};
+
+///  show Student for Give Exam
+
+export const showStudent = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        "https://nodejsexamination.herokuapp.com/dashboard/Teachers/StudentForExam",
+        {
+          headers: examHeaders,
+        }
+      );
+
+      console.log("Response is: ", res.data.data);
+      if (res.data.statusCode === 200) {
+        dispatch({
+          type: SHOW_STUDENTS,
+          payload: res.data.data,
+        });
+      }
+    } catch (err) {
+      console.log("Error in API calling", err);
+    }
+  };
+};
+
+export const searchStudentData = (searchTerm) => {
+  return {
+    type: SEARCH_STUDENT,
+    payload: searchTerm,
+  };
+};
+
+export const studentResults = (student_id, history) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `https://nodejsexamination.herokuapp.com/dashboard/Teachers/viewStudentDetail?id=${student_id}`,
+        {
+          headers: examHeaders,
+        }
+      );
+      console.log("Student Result API response", res);
+      if (res.data.statusCode === 200) {
+        dispatch({
+          type: STUDENT_RESULTS,
+          payload: res.data.data,
+        });
+        history.push(`/result/${student_id}`);
+      }
+    } catch (err) {
+      console.log("Student Result API Error", err);
+    }
+  };
+};
+
+export const updateExam = (data, id, history) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.put(
+        `https://nodejsexamination.herokuapp.com/dashboard/Teachers/editExam?id=${id}`,
+        data,
+        {
+          headers: examHeaders,
+        }
+      );
+
+      console.log("update API Response is :-", res);
+      if (res.data.statusCode === 200) {
+        dispatch({
+          type: UPDATE_EXAM,
+          data: data,
+          id: id,
+        });
+        history.push("/view_exam");
+      }
+    } catch (err) {
+      console.log("update API Error is", err);
+    }
   };
 };

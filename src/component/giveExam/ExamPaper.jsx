@@ -81,7 +81,7 @@ const ExamPaper = () => {
   return (
     <>
       <h4>Exam Paper </h4>
-      {/* {examData.map((item, index) => {
+      {examData.map((item, index) => {
         if (currentIndex === index) {
           if (currentIndex <= examData.length - 1) {
             return (
@@ -118,7 +118,7 @@ const ExamPaper = () => {
             );
           }
         }
-      })} */}
+      })}
     </>
   );
 };

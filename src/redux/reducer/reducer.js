@@ -4,7 +4,10 @@ import {
   EXAM_DETAILS,
   EXAM_ONCHANGE,
   LOGIN,
+  SHOW_STUDENTS,
   SIGNUP,
+  STUDENT_RESULTS,
+  UPDATE_EXAM,
   VIEW_EXAM,
 } from "../constaints/constaint";
 
@@ -16,8 +19,12 @@ const initialState = {
     message: null,
   },
   createExams: [],
+
   viewExams: [],
+
   examDetail: {},
+  studentData: [],
+  studentResult: [],
 };
 
 export default function examReducer(state = initialState, action) {
@@ -50,7 +57,11 @@ export default function examReducer(state = initialState, action) {
       };
 
     case VIEW_EXAM:
-      return { ...state, viewExams: action.payload };
+      console.log("Action send reducer Data in viewExams", action.payload);
+      return {
+        ...state,
+        viewExams: action.payload,
+      };
 
     case DELETE_EXAM:
       console.log("Action send deleted id is", action.payload);
@@ -77,7 +88,23 @@ export default function examReducer(state = initialState, action) {
         }
       });
       console.log("Update Array: ", updateArray);
+      return { ...state };
 
+    case SHOW_STUDENTS:
+      return { ...state, studentData: action.payload };
+
+    case STUDENT_RESULTS:
+      return { ...state, studentResult: action.payload };
+
+    case UPDATE_EXAM:
+      const updateExam = state.viewExams.map((item, index) => {
+        if (item.id === action.id) {
+          return { ...item, SubjectName: action.data };
+        } else {
+          return item;
+        }
+      });
+      return { ...state, viewExams: updateExam };
     default:
       return state;
   }

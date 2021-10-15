@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {
@@ -8,6 +8,9 @@ import {
 } from "../../redux/actions/action";
 
 const ViewExam = () => {
+  const [subjectName, setSubjectName] = useState();
+  const [isEditable, setisEditable] = useState(false);
+
   const state = useSelector((state) => state.examReducer.viewExams);
   console.log("Redux State Data  in ViewExam", state);
   const dispatch = useDispatch();
@@ -16,6 +19,15 @@ const ViewExam = () => {
   useEffect(() => {
     dispatch(viewExams());
   }, []);
+
+  const editableMode = (id) => {
+    console.log("id is editable", id);
+    // const data = state.map((item, index) => {
+    //   if (index === id) {
+    //     setisEditable(true);
+    //   }
+    // });
+  };
   return (
     <>
       ViewExam Component
@@ -28,10 +40,18 @@ const ViewExam = () => {
           </tr>
         </thead>
         <tbody>
-          {state.map((exams) => {
+          {state.map((exams, index) => {
             return (
               <tr key={exams._id}>
-                <td>{exams.subjectName}</td>
+                {isEditable ? (
+                  <input
+                    type="text"
+                    name="subjectName"
+                    value={exams.subjectName}
+                  />
+                ) : (
+                  <td>{exams.subjectName}</td>
+                )}
                 <td>{exams.notes}</td>
                 <td>
                   <button
@@ -43,10 +63,10 @@ const ViewExam = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      dispatch(examDetails(exams._id, history));
+                      history.push(`/edit_exam/${exams._id}`);
                     }}
                   >
-                    Exam Detail
+                    Edit Exam
                   </button>
                 </td>
               </tr>

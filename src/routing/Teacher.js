@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ViewExam from "../component/CreateExam/ViewExam";
 import ViewStudent from "../component/CreateExam/ViewStudent";
 import EditExam from "../component/CreateExam/EditExam";
+import StudentResult from "../component/giveExam/StudentResult";
 
 const Teacher = () => {
   return (
@@ -20,7 +21,7 @@ const Teacher = () => {
               <Link to="/view_exam">View Exam</Link>
             </li>
             <li>
-              <Link to="/view_student">View Students</Link>
+              <Link to="/view_student">View Student for Exam</Link>
             </li>
           </ul>
         </nav>
@@ -29,6 +30,7 @@ const Teacher = () => {
         <Route path="/view_exam" component={ViewExam} />
         <Route path="/view_student" component={ViewStudent} />
         <Route path="/edit_exam/:id" component={EditExam} />
+        <Route path="/result/:id" component={StudentResult} />
       </div>
     </>
   );

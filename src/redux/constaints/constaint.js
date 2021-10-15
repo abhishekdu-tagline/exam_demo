@@ -6,6 +6,11 @@ export const VIEW_EXAM = "VIEW_EXAM";
 export const DELETE_EXAM = "DELETE_EXAM";
 export const EXAM_DETAILS = "EXAM_DETAILS";
 export const EXAM_ONCHANGE = "EXAM_ONCHANGE";
+export const SHOW_STUDENTS = "SHOW_STUDENTS";
+export const SEARCH_STUDENT = "SEARCH_STUDENTS";
+export const STUDENT_RESULTS = "STUDENT_RESULTS";
+export const EDIT_EXAM = "EDIT_EXAM";
+export const UPDATE_EXAM = "UPDATE_EXAM";
 
 //// Student Constaints //
 
